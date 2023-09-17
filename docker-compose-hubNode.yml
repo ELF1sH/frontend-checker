@@ -1,0 +1,80 @@
+version: "3.8"
+services:
+  web:
+    container_name: checker-application
+    build:
+      context: ./
+    ports:
+      - "8000:8000"
+    networks:
+      - main
+    depends_on:
+      - chrome
+      - edge
+      - firefox
+      - project-to-test
+
+  project-to-test:
+    container_name: project-to-test
+    build:
+      context: ./project-to-test/
+    networks:
+      - main
+    ports:
+      - "8080:8080"
+
+  selenium-hub:
+    image: selenium/hub:4.7.1-20221208
+    container_name: selenium-hub
+    networks:
+      - main
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:4.7.1-20221208
+    shm_size: 2gb
+    networks:
+      - main
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+
+  edge:
+    image: selenium/node-edge:4.7.1-20221208
+    shm_size: 2gb
+    networks:
+      - main
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+
+  firefox:
+    image: selenium/node-firefox:4.7.1-20221208
+    shm_size: 2gb
+    networks:
+      - main
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_VNC_NO_PASSWORD=1
+
+networks:
+  main:
+    driver: bridge
+
+#docker-compose -f docker-compose-hubNode.yml up -d
+# To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose-v3.yml down`
