@@ -26,5 +26,7 @@ module.exports = {
     'import/no-unresolved': 'off',
 
     'unused-imports/no-unused-imports-ts': 1,
+    'no-await-in-loop': 'off',
+    'no-restricted-syntax': 'off',
   },
 };

@@ -34,9 +34,6 @@ export const uploadSrc = async (req: Request, res: Response) => {
 
   await extract(zipFilePath, {
     dir: volumeDir,
-    onEntry: (entry) => {
-      console.log(entry);
-    },
   });
 
   fs.unlinkSync(zipFilePath);
