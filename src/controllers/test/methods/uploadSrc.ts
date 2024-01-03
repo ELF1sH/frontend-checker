@@ -4,15 +4,22 @@ import extract from 'extract-zip';
 import * as fs from 'fs';
 import path from 'path';
 
+/*
+A METHOD OF UPLOADING A SOURCE CODE OF THE REFERENCE SOLUTION
+
+this method proves that we can easily substitute reference solutions programmatically
+*/
+
 export const uploadSrc = async (req: Request, res: Response) => {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send('No files were uploaded.');
   }
 
+  // IT MEANS THAT THE NAME OF THE FIELD IN THE FORM DATA SHOULD BE SRC
   let { src } = req.files;
   src = src as fileUpload.UploadedFile;
 
-  const volumeDir = '/project-to-test/src/';
+  const volumeDir = '/reference-solution/src/';
   // const volumeDir = '/Users/RayanS/Documents/unzip';
 
   const zipFilePath = `${volumeDir}${src.name}`;

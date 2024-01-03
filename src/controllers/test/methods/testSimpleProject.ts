@@ -11,7 +11,7 @@ export const testSimpleProject = async (req: Request, res: Response) => {
     .build();
 
   try {
-    await driver.get('http://project-to-test:8080/');
+    await driver.get('http://reference-solution:8080/');
     await driver.wait(until.titleIs('Document'), 10000);
 
     return res.status(200).send({ message: 'OK' });
