@@ -22,6 +22,3 @@ const driver = new Builder()
 ## HTTP access between containers of docker-compose
 1. Selenium hub: `http://selenium-hub:4444/wd/hub`
 2. Reference solution: `http://reference-solution:8080/`
-
-## Attention
-1. Container with the name `project-to-test` can be a container for a reference solution
