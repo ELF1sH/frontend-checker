@@ -7,7 +7,7 @@ import path from 'path';
 /*
 A METHOD OF UPLOADING A SOURCE CODE OF THE REFERENCE SOLUTION
 
-this method proves that we can easily substitute reference solutions programmatically
+this method proves that we can easily substitute code of reference solutions programmatically
 */
 
 export const uploadSrc = async (req: Request, res: Response) => {
