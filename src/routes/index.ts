@@ -9,5 +9,6 @@ router.post('/test-simple-project', auth, testController.testSimpleProject);
 router.get('/get-html', auth, testController.getHtml);
 router.post('/upload-src', auth, testController.uploadSrc);
 router.post('/test', auth, testController.test);
+router.post('/test2', auth, testController.test2);
 
 export default router;

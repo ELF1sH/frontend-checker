@@ -3,6 +3,7 @@ import { testSimpleProject } from './methods/testSimpleProject';
 import { getHtml } from './methods/getHtml';
 import { uploadSrc } from './methods/uploadSrc';
 import { test } from './methods/test';
+import { test2 } from './methods/test2';
 
 export const testController = {
   testTaskBank,
@@ -10,4 +11,5 @@ export const testController = {
   getHtml,
   uploadSrc,
   test,
+  test2,
 };

@@ -9,14 +9,12 @@ import { getDriver } from '../../../services/getDriver';
 import { ITestCaseResult } from '../../../types/ITestCaseResult';
 
 const testCase1 = `
-  async (driver, Browser, Builder, By, Key, until) => {
-    await driver.findElement(By.xpath('//div[contains(text(),\\'Personal Cards\\')]'));
-  };
+  async (driver, Browser, Builder, By, Key, until) => {};
 `;
 
 const testCases = [testCase1];
 
-export const test = async (req: Request, res: Response) => {
+export const test2 = async (req: Request, res: Response) => {
   const refSolutionDriver = await getDriver();
   const attemptDriver = await getDriver();
 
@@ -29,8 +27,8 @@ export const test = async (req: Request, res: Response) => {
 
     try {
       // await driver.get('http://reference-solution:8080/');
-      await refSolutionDriver.get('https://test-2-reference-solution.pages.dev/');
-      await attemptDriver.get('https://test-1-attempt-1.pages.dev/');
+      await refSolutionDriver.get('https://test-2-reference-solution-eyh.pages.dev/');
+      await attemptDriver.get('https://test-2-attempt-1.pages.dev/');
 
       const cb = eval(testCase);
       await cb(refSolutionDriver, Browser, Builder, By, Key, until);
@@ -44,11 +42,13 @@ export const test = async (req: Request, res: Response) => {
         THRESHOLD,
       );
 
-      refSolutionScreenshotJimp.write('ref1.png');
-      attemptScreenshotJimp.write('attempt1.png');
-      diffReturn.image.write('diff1.png');
+      refSolutionScreenshotJimp.write('ref2.png');
+      attemptScreenshotJimp.write('attempt2.png');
+      diffReturn.image.write('diff2.png');
 
       const distance = Jimp.distance(refSolutionScreenshotJimp, attemptScreenshotJimp);
+
+      // diffReturn.image.write('jimp.png');
 
       // const diff = new PNG({ width, height });
       //
@@ -70,7 +70,7 @@ export const test = async (req: Request, res: Response) => {
       //
       // console.log('max = ', Math.max(...diffedPixels));
 
-      // diffReturn.image.write('diff1.png');
+      // fs.writeFileSync('diff1.png', PNG.sync.write(diff));
 
       result.push({
         testCaseNumber: testCaseIdx + 1,
