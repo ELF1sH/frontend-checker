@@ -2,6 +2,8 @@ import { WebDriver } from 'selenium-webdriver';
 import { Buffer } from 'buffer';
 import Jimp from 'jimp';
 
+const VERTICAL_SCROLL_WIDTH = 17;
+
 interface FullScreenBuffer {
   jimp: Jimp;
   width: number;
@@ -51,11 +53,18 @@ export const getFullPageScreenshot = async (driver: WebDriver): Promise<FullScre
   );
   images.splice(-1, 1, croppedJimp);
 
-  const fullPageScreenshot = new Jimp(windowWidth, totalHeight);
+  let fullPageScreenshot = new Jimp(windowWidth, totalHeight);
 
   for (let i = 0; i < images.length; i += 1) {
     fullPageScreenshot.composite(images[i], 0, i * windowHeight);
   }
+
+  fullPageScreenshot = fullPageScreenshot.crop(
+    0,
+    0,
+    windowWidth - VERTICAL_SCROLL_WIDTH,
+    totalHeight,
+  );
 
   return {
     jimp: fullPageScreenshot,

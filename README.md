@@ -21,6 +21,11 @@ Selenium Webdriver cannot set the browser window width below 500px in any enviro
 One possible solution is to use [browser's mobile emulation](https://stackoverflow.com/questions/56054665/chrome-webdriver-set-viewport-below-500px).
 
 ## Warning #2
+
+If a screenshot contains a vertical scrollbar, it is always cropped automatically.
+The width of the vertical scrollbar is 17 pixels. This means that the width of the output screenshot will be 17 pixels smaller than expected.
+
+## Warning #3
 Selenium Webdriver cannot set the browser window height greater than the actual height of the display (in my case 1080px) on WINDOWS.
 Including the browser app bar, a screenshot height cannot exceed 962.
 ***This does not apply to the docker environment!***
