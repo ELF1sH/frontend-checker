@@ -15,10 +15,11 @@ const testCase1 = `
 const testCases = [testCase1];
 
 export const test2 = async (req: Request, res: Response) => {
-  const refSolutionDriver = await getDriver();
-  const attemptDriver = await getDriver();
-
   const THRESHOLD = req.body.threshold ?? 0.2;
+  const { windowWidth, windowHeight } = req.body;
+
+  const refSolutionDriver = await getDriver({ width: windowWidth, height: windowHeight });
+  const attemptDriver = await getDriver({ width: windowWidth, height: windowHeight });
 
   const result: ITestCaseResult[] = [];
 
@@ -47,30 +48,6 @@ export const test2 = async (req: Request, res: Response) => {
       diffReturn.image.write('diff2.png');
 
       const distance = Jimp.distance(refSolutionScreenshotJimp, attemptScreenshotJimp);
-
-      // diffReturn.image.write('jimp.png');
-
-      // const diff = new PNG({ width, height });
-      //
-      // const mismatchedPixels = pixelmatch(
-      //   refSolutionScreenshotBuffer,
-      //   attemptScreenshotBuffer,
-      //   diff.data,
-      //   width,
-      //   height,
-      //   {
-      //     threshold: THRESHOLD,
-      //   },
-      // );
-
-      // const sum = diff.data.reduce((prev, cur) => prev + cur, 0);
-      // const totalSum = diff.data.length * 255;
-      // console.log('diff = ', sum / totalSum);
-      // const diffedPixelsPercent = diffedPixels.map((rgb) => rgb / 255); // [0, 1]
-      //
-      // console.log('max = ', Math.max(...diffedPixels));
-
-      // fs.writeFileSync('diff1.png', PNG.sync.write(diff));
 
       result.push({
         testCaseNumber: testCaseIdx + 1,
