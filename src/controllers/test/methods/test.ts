@@ -35,6 +35,7 @@ export const test = async (req: Request, res: Response) => {
 
       const cb = eval(testCase);
       await cb(refSolutionDriver, Browser, Builder, By, Key, until);
+      await cb(attemptDriver, Browser, Builder, By, Key, until);
 
       const { jimp: refSolutionScreenshotJimp } = await getFullPageScreenshot(refSolutionDriver);
       const { jimp: attemptScreenshotJimp } = await getFullPageScreenshot(attemptDriver);

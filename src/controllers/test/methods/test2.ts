@@ -12,7 +12,25 @@ const testCase1 = `
   async (driver, Browser, Builder, By, Key, until) => {};
 `;
 
-const testCases = [testCase1];
+const testCase2 = `
+  async (driver, Browser, Builder, By, Key, until) => {
+    const elem = await driver.findElement(By.xpath('//*[contains(text(),\\'Colombia\\')]'));
+    await driver.actions().move({
+      duration: 500, x: 10, y: 10, origin: elem,
+    }).perform();
+  };
+`;
+
+const testCase3 = `
+  async (driver, Browser, Builder, By, Key, until) => {
+    const elem = await driver.findElement(By.xpath('//*[contains(text(),\\'Colombia\\')]'));
+    await driver.actions().move({
+      duration: 1000, x: 10, y: 10, origin: elem,
+    }).perform();
+  };
+`;
+
+const testCases = [testCase1, testCase2, testCase3];
 
 export const test2 = async (req: Request, res: Response) => {
   const THRESHOLD = req.body.threshold ?? 0.2;
@@ -33,6 +51,7 @@ export const test2 = async (req: Request, res: Response) => {
 
       const cb = eval(testCase);
       await cb(refSolutionDriver, Browser, Builder, By, Key, until);
+      await cb(attemptDriver, Browser, Builder, By, Key, until);
 
       const { jimp: refSolutionScreenshotJimp } = await getFullPageScreenshot(refSolutionDriver);
       const { jimp: attemptScreenshotJimp } = await getFullPageScreenshot(attemptDriver);
@@ -43,9 +62,9 @@ export const test2 = async (req: Request, res: Response) => {
         THRESHOLD,
       );
 
-      refSolutionScreenshotJimp.write('ref2.png');
-      attemptScreenshotJimp.write('attempt2.png');
-      diffReturn.image.write('diff2.png');
+      refSolutionScreenshotJimp.write(`ref-${testCaseIdx}.png`);
+      attemptScreenshotJimp.write(`attempt-${testCaseIdx}.png`);
+      diffReturn.image.write(`diff-${testCaseIdx}.png`);
 
       const distance = Jimp.distance(refSolutionScreenshotJimp, attemptScreenshotJimp);
 
