@@ -31,7 +31,8 @@ export const test = async (req: Request, res: Response) => {
     try {
       // await driver.get('http://reference-solution:8080/');
       await refSolutionDriver.get('https://test-2-reference-solution.pages.dev/');
-      await attemptDriver.get('https://test-1-attempt-1.pages.dev/');
+      // await attemptDriver.get('https://test-1-attempt-1.pages.dev/');
+      await attemptDriver.get('https://test-1-attempt-2.pages.dev/');
 
       const cb = eval(testCase);
       await cb(refSolutionDriver, Browser, Builder, By, Key, until);
